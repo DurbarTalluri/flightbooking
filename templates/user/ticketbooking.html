@@ -1,0 +1,33 @@
+{% load filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ticket Booking Page</title>
+</head>
+<body>
+    <marquee>---Please Dont Leave the page abruptly---</marquee>
+    <h2>Ticket Booking Page</h2>
+    <b>Fill up the passenger details</b>
+        <form action="payment" method="POST">
+            {% csrf_token %}
+            {% for i in numberofpassengers|Range %}
+                Passenger {{i}}:<br>
+                {% with sendname="name"|add:i sendage="age"|add:i sendgender="gender"|add:i sendmeals="meals"|add:i %}
+                Name:<br>
+                <input type="text" name="name{{i}}" placeholder="Name of the person" required><br>
+                Age:<br>
+                <input type="number" name="age{{i}}" placeholder="Age of the person" required><br>
+                Gender:<br>
+                <input type="text" name="gender{{i}}" placeholder="gender of the person" required><br>
+                Meals:<br>
+                <input type="text" name="meals{{i}}" placeholder="yes or no" required><br><br>
+                {% endwith %}
+            {% endfor %}
+            <button type="submit" name="submitdetails" value={{numberofpassengers}}>Submit Details</button>
+        </form>
+        <form action="booking" method="POST">
+            {% csrf_token %}
+            <button type="submit" name="donotbook" value={{tickid}}>Go Back</button>
+        </form>
+</body>
+</html>

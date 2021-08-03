@@ -1,0 +1,91 @@
+{% extends 'user/base.html' %}
+{% load filters %}
+{% block content %}
+<title>Admin Page</title>
+<h1>Admin Page</h1>
+    <h3>Edit your flight details</h3>
+    <form id="id_addflightbtn" action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="addflight">Add flight</button>
+    </form>
+    <!--<script type="text/javascript">
+        $(document).on('submit','#id_addflightbtn',function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url:'useradmin/edit',
+                data:{
+                    addflight:$('#addflight').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(){}
+            });
+        });
+    </script>-->
+    <b>{{error}}</b>
+    
+    {%if add %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            Flight Number:
+            <input type="text" name="id" placeholder="Flight ID" required value={{flight.id}}><br>
+            Source:
+            <input type="text" name="source" placeholder="Source" required value={{flight.source}}><br>
+            Destination:
+            <input type="text" name="destination" placeholder="Destination" required value={{flight.destination}}><br>
+            Departure Time:
+            <input type="time" name="deptime" placeholder="Depatrture time" required value={{flight.deptime}}><br>
+            Departure Date:
+            <input type="date" name="depdate" required value={{flight.depdate}}><br>
+            Arrival Time:
+            <input type="time" name="arrtime" placeholder="Arrival time" required value={{flight.arrtime}}><br>
+            Arrival Date:
+            <input type="date" name="arrdate" required value={{flight.arrdate}}><br>
+            Number of seats:
+            <input type="number" name="remain" placeholder="Number of seats" required value={{flight.capacity}}><br>
+            Price of a ticket:
+            <input type="number" name="price" placeholder="Price" required value={{flight.price}}><br>
+            <button type="submit" name = "add">Add</button>
+        </form>
+    {%endif%}
+    {% for id,flight in flights.items %}
+    <table><tr>
+        <td>{{flight.source}} ({{flight.depdate}} at {{flight.deptime}}) to {{flight.destination}}({{flight.arrdate}} at {{flight.arrtime}})
+        {%if edit|element:id %}
+        <form action='' method="POST">
+            {% csrf_token %}
+            Flight Number:
+            <input type="text" name="id" placeholder="Flight ID" required value={{flight.id}}><br>
+            Source:
+            <input type="text" name="source" placeholder="Source" required value={{flight.source}}><br>
+            Destination:
+            <input type="text" name="destination" placeholder="Destination" required value={{flight.destination}}><br>
+            Departure Time:
+            <input type="time" name="deptime" placeholder="Depatrture time" required value={{flight.deptime}}><br>
+            Departure Date:
+            <input type="date" name="depdate" required value={{flight.depdate}}><br>
+            Arrival Time:
+            <input type="time" name="arrtime" placeholder="Arrival time" required value={{flight.arrtime}}><br>
+            Arrival Date:
+            <input type="date" name="arrdate" required value={{flight.arrdate}}><br>
+            Number of seats:
+            <input type="number" name="remain" placeholder="Number of seats" required value={{flight.remain}}><br>
+            Price of a ticket:
+            <input type="number" name="price" placeholder="Price" required value={{flight.price}}><br>
+            <button type="submit" required value = {{id}} name = "editdetailsbtn">Save Changes</button>
+        </form></td>
+        {%endif%}
+        <td>
+        <form action = '' method="POST">
+            {% csrf_token %}
+            <button type="submit" name="editbutton" required value = {{id}} >Edit</button>
+        </form></td>
+        <td>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="deletebutton" required value={{id}}>Remove flight</button>
+            </form>
+        </td>
+        </tr></table>
+    {% endfor %}
+{% endblock %}

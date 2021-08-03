@@ -1,0 +1,26 @@
+{% load filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Cancellation Page</title>
+</head>
+<body>
+    <h2>Booking Cancellation Page</h2>
+    {% for seat,ticket in seatdetails.items %}
+    <form action="cancelbooking" method="POST">
+        {% csrf_token%}
+        Name: {{ticket.name}}<br>
+        Age: {{ticket.age}}<br>
+        Gender: {{ticket.gender}}<br>
+        Meals: {{ticket.meals}}<br>
+        {% with seatnumber=seat|seatnumber:tickid %}
+    <button type="submit" name="cancelticket" value={{seatnumber}}>Cancel Ticket</button><br>
+        {% endwith %}
+    </form>
+    {% endfor %}
+    <form action="mybookings" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="goback">Go Back</button>
+    </form>
+</body>
+</html>

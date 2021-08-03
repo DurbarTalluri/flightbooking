@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error Page</title>
+</head>
+<body>
+    <h2>NO ACCESS</h2>
+    {% if user %}
+    You have no access to this Page<br>
+    {%else%}
+    <b>It seems you have not logged in yet or logged out, Please login to access this page</b><br>
+    {% endif %}
+    Redirect to login page:
+    <a href="/user/login">Login page</a><br>
+    Go to homepage without Login:
+    <a href="/user/booking">Home</a>
+</body>
+</html>

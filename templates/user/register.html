@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Page</title>
+</head>
+<body>
+    {{userid}}
+    <form action="booking" method="POST">
+        {% csrf_token %}
+        New Username:<br>
+        <input type="text" name="newusername" placeholder="Username"><br>
+        Password:<br>
+        <input type="password" name="newpassword" placeholder="Password"><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>

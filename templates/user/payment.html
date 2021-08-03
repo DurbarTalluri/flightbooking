@@ -1,0 +1,22 @@
+{% load filters %}
+    <title>Payment Page</title>
+    <h2>Payment Page</h2>
+    <b>Your Booking Details:</b><br><br>
+    <b>Flight Details </b>: {{flightdetails}}<br>
+    <b>Ticket Details </b><br>
+    {% for seatnumber, details in ticket.seatdetails.items %}
+        Seat Number: {{seatnumber}}<br>
+        Name of Passenger: {{details.name}}<br>
+        Age of Passenger: {{detials.age}}<br>
+        Gender of Passenger: {{detials.gender}}<br>
+        Meals Ordered: {{details.meals}}<br>
+        Total ticket cost: {{details.ticketcost}}<br>
+    {% endfor %}
+    Total Number of tickets:{{ticket.no}}<br>
+    Total Cost:{{ticket.cost|roundoff}}/-<br>
+    <br>
+    <form action="booking" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="anotherbooking" value={{tickets}}>Confirm Booking</button>
+        <button type="submit" name="cancelpayment" value={{tickid}}>Cancel Booking</button>
+    </form>

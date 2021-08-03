@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+    <a href="/user/booking">Home</a>&nbsp;&nbsp;
+    <a href="/user/mybookings">My Bookings</a>&nbsp;&nbsp;
+    {% if not page %}
+    {% if not user %}
+    <a href="/user/login">Login</a>&nbsp;&nbsp;
+    {% elif user %}
+    <a href="/user/logout">Logout</a>&nbsp;&nbsp;
+    {% endif %}
+    {% endif %}
+    {% if user == "durbar" %}
+    <a href="/adminpage">Admin Page</a>
+    {% endif %}
+{% block content %}{% endblock %}
+</body>
+</html>

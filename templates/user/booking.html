@@ -1,0 +1,30 @@
+{% extends 'user/base.html' %}
+{% load filters %}
+{% block content %}
+<title>Booking Page</title>
+<h3>Book your Flight here</h3>
+<form action='booking' method="POST">
+    {% csrf_token %}
+    <input type="text" name="sourcesearch" placeholder="Search by Source">
+    <input type="text" name="destinationsearch" placeholder="Search by Destination">
+    <input type="submit" value="Search">
+</form>
+{{message}}
+{% for id,flight in flights.items %}
+<br>
+<form action="booking" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="description" value={{id}}>{{flight.source}}({{flight.depdate}} at {{flight.deptime}}) to {{flight.destination}}({{flight.arrdate}} at {{flight.arrtime}})</button><br>
+</form>
+    {% if description|element:id %}
+    Available Tickets: {{flight.remain}}<br>
+    {{flight.remain|remainatcurrentprice}} tickets at a price of Rs {{flight.price|roundoff}}/- each and remaining<br>
+    {{flight.remain|remainathikeprice}} tickets with an increase of 5% of current price for each 10 tickets<br>
+    <form action="ticketbooking" method="POST">
+        {% csrf_token %}
+        <input type="number" name="number" Placeholder="Number of Tickets" required min="1" max={{flight.remain}}>
+        <button type="submit" name="bookticket" value={{id}}>Book Ticket</button>
+    </form>
+{%endif%}
+{% endfor %}
+{% endblock %}

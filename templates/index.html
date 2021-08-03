@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin Login Page</title>
+    </head>
+    <body>
+        <h1>Admin Login</h1>
+        <form action="adminpage" method="POST">
+            {% csrf_token %}
+            Username:<br>
+            <input type="text" name="username" placeholder="UserName" autocomplete="off"><br>
+            Password:<br>
+            <input type="password" name="password" placeholder= "Password"><br>
+            <input type="Submit" value ="Login">
+        </form>
+        {{error}}
+    </body>
+</html>

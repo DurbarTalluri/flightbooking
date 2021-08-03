@@ -1,0 +1,36 @@
+{% extends 'user/base.html' %}
+{% load filters %}
+{% block content %}
+<title>My Bookings</title>
+<h2>My Bookings</h2>
+<form action="booking" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="goback">Go Back</button>
+</form>
+{% if tickets %}
+    {% for tickid,ticket in tickets.items %}
+    {% if ticket.status %}
+    <b>Bookig ID: tickid</b><br>
+    Sorry for the inconvenience, Your flight has been cancelled.<br> Your money will be transferred to your account</b><br>
+    {{ticket.flightdetails}}<br>
+    Number of Tickets:{{ticket.no}}<br>
+    Total Price of booking: {{ticket.cost|roundoff}}<br><br>
+    {% else %}
+    <b>Flight Details:</b><br>
+    {% with fd=flights|flightdetails:ticket.fid %}
+        {{fd}}
+    {%endwith%}
+    <br>
+    <b>Booking details</b><br>
+    Number of Tickets:{{ticket.no}}<br>
+    Total Price of booking: {{ticket.cost|roundoff}}
+    <form action="cancelbooking" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="cancelbooking" value={{tickid}}>Edit Booking</button><br>
+    </form>
+    {% endif %}
+    {% endfor %}
+{% else %}
+    You have no bookings
+{% endif %}
+{% endblock %}
